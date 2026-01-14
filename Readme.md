@@ -439,18 +439,3 @@ Before moving forward, make sure you can:
 * Dry-run both patterns
 * Write the logic without memorizing code
 
----
-
-## Next Step
-
-Please tell me:
-
-1. Which pattern is unclear?
-2. Which example confused you?
-3. Do you want more practice problems or visual walkthroughs?
-
-Once your doubts are cleared, we will proceed to:
-
-**Pattern 3: Fast & Slow Pointers**
-**Pattern 4: Hashing / Frequency Map**
-and so on — in a structured way.
