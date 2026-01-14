@@ -438,4 +438,230 @@ Before moving forward, make sure you can:
 * Identify **Sliding Window** problems
 * Dry-run both patterns
 * Write the logic without memorizing code
+* 
+
+
+Excellent. We will now proceed with **Pattern 3** and **Pattern 4**, maintaining the same structured, interview-oriented approach.
+
+At the end, I will also give you a **concise overview** of how many major patterns exist.
+
+---
+
+# Pattern 3: Fast & Slow Pointers (Tortoise–Hare)
+
+## 1. What This Pattern Solves
+
+Use **Fast & Slow Pointers** when:
+
+* You are working with **linked lists**
+* You need to detect **cycles**
+* You need to find the **middle**
+* You need to identify **loop entry points**
+
+Typical problems:
+
+* Detect cycle in linked list
+* Find middle of linked list
+* Happy Number
+* Find duplicate number
+
+---
+
+## 2. Core Idea
+
+Use **two pointers**:
+
+* `slow` → moves 1 step
+* `fast` → moves 2 steps
+
+If there is a **cycle**, they will eventually meet.
+
+---
+
+## 3. Visual Intuition
+
+```
+slow →  o   o   o   o
+fast →      o       o
+```
+
+Fast pointer "laps" slow pointer in a cycle.
+
+---
+
+## 4. Example: Detect Cycle in Linked List
+
+### Code:
+
+```python
+def hasCycle(head):
+    slow = fast = head
+    
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+        if slow == fast:
+            return True
+    
+    return False
+```
+
+---
+
+## 5. Why It Works
+
+* Fast pointer closes the gap
+* If no cycle → fast hits `None`
+* If cycle → pointers meet
+
+Time: **O(n)**
+Space: **O(1)**
+
+---
+
+## 6. Find Middle of Linked List
+
+```python
+def findMiddle(head):
+    slow = fast = head
+    
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    
+    return slow
+```
+
+Slow pointer ends at the middle.
+
+---
+
+## 7. When NOT to Use It
+
+* Arrays or strings
+* When you need frequency counts
+* When order-based windows are required
+
+---
+
+# Pattern 4: Hashing / Frequency Map
+
+## 1. What This Pattern Solves
+
+Use **Hashing** when:
+
+* You need **fast lookups**
+* You need **counts**
+* You need to detect **duplicates**
+* You need to map values to indices
+
+Typical problems:
+
+* Two Sum
+* Anagrams
+* Subarray Sum
+* Top K Frequent
+* Group Anagrams
+
+---
+
+## 2. Core Idea
+
+Store information in:
+
+```
+key → value
+```
+
+So lookups are **O(1)**.
+
+---
+
+## 3. Example: Two Sum
+
+```python
+def twoSum(nums, target):
+    seen = {}
+    
+    for i, num in enumerate(nums):
+        if target - num in seen:
+            return [seen[target - num], i]
+        seen[num] = i
+```
+
+---
+
+## 4. Example: Frequency Count
+
+```python
+from collections import Counter
+
+words = ["a", "b", "a", "c"]
+freq = Counter(words)
+```
+
+Result:
+
+```
+{'a': 2, 'b': 1, 'c': 1}
+```
+
+---
+
+## 5. Example: Anagram Check
+
+```python
+def isAnagram(s, t):
+    return Counter(s) == Counter(t)
+```
+
+---
+
+## 6. Why Hashing Is Powerful
+
+* Eliminates nested loops
+* Converts problems to **lookup-based**
+* Improves time from O(n²) → O(n)
+
+---
+
+## 7. Pattern 3 vs Pattern 4
+
+| Feature  | Fast–Slow             | Hashing        |
+| -------- | --------------------- | -------------- |
+| Data     | Linked List           | Any            |
+| Goal     | Detect cycle / middle | Lookup / count |
+| Space    | O(1)                  | O(n)           |
+| Use case | Loops                 | Frequencies    |
+
+---
+
+# How Many DSA Patterns Are There?
+
+Most interview problems can be classified into **15 core patterns**.
+
+Here is the **standard list**:
+
+1. Two Pointers
+2. Sliding Window
+3. Fast & Slow Pointers
+4. Hashing / Frequency Map
+5. Prefix Sum
+6. Binary Search
+7. Merge Intervals
+8. Heap / Priority Queue
+9. Monotonic Stack
+10. Backtracking
+11. Greedy
+12. Recursion
+13. Dynamic Programming
+14. Graph (BFS/DFS)
+15. Bit Manipulation
+
+Mastering these covers **90%+** of interview questions.
+
+---
+
+
 
