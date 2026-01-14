@@ -663,5 +663,215 @@ Mastering these covers **90%+** of interview questions.
 
 ---
 
+Excellent. We will now proceed with:
+
+**Pattern 5: Prefix Sum**
+**Pattern 6: Binary Search**
+
+As before, the explanation will be structured, practical, and interview-focused.
+
+---
+
+# Pattern 5: Prefix Sum
+
+## 1. What This Pattern Solves
+
+Use **Prefix Sum** when:
+
+* You need **range sum queries**
+* You want to avoid repeated summation
+* You are working with **subarrays**
+
+Typical problems:
+
+* Subarray sum equals K
+* Range sum queries
+* Maximum average subarray
+* Counting subarrays with conditions
+
+---
+
+## 2. Core Idea
+
+Instead of recomputing sums repeatedly:
+
+You **precompute cumulative sums**.
+
+Example:
+
+```
+nums = [2, 4, 1, 3]
+prefix = [2, 6, 7, 10]
+```
+
+Now:
+
+Sum from index `1 to 3`
+= `prefix[3] - prefix[0] = 10 - 2 = 8`
+
+---
+
+## 3. Why Prefix Sum Is Efficient
+
+Without prefix sum:
+
+* Each range query = O(n)
+
+With prefix sum:
+
+* Each range query = O(1)
+
+Preprocessing = O(n)
+
+---
+
+## 4. Example: Range Sum Query
+
+```python
+def buildPrefix(nums):
+    prefix = [0] * len(nums)
+    prefix[0] = nums[0]
+    
+    for i in range(1, len(nums)):
+        prefix[i] = prefix[i-1] + nums[i]
+    
+    return prefix
+```
+
+Query:
+
+```python
+def rangeSum(prefix, l, r):
+    if l == 0:
+        return prefix[r]
+    return prefix[r] - prefix[l-1]
+```
+
+---
+
+## 5. Example: Subarray Sum = K
+
+```python
+def subarraySum(nums, k):
+    count = 0
+    prefix_sum = 0
+    seen = {0: 1}
+    
+    for num in nums:
+        prefix_sum += num
+        
+        if prefix_sum - k in seen:
+            count += seen[prefix_sum - k]
+        
+        seen[prefix_sum] = seen.get(prefix_sum, 0) + 1
+    
+    return count
+```
+
+---
+
+## 6. When NOT to Use Prefix Sum
+
+* When order does not matter
+* When you need dynamic resizing
+* When data changes frequently
+
+---
+
+# Pattern 6: Binary Search
+
+## 1. What This Pattern Solves
+
+Use **Binary Search** when:
+
+* Data is **sorted**
+* You need **fast searching**
+* The search space is monotonic
+
+Typical problems:
+
+* Find element in sorted array
+* First/last occurrence
+* Peak element
+* Minimum in rotated array
+* Search in infinite array
+
+---
+
+## 2. Core Idea
+
+Instead of checking every element:
+
+You repeatedly **divide the search space in half**.
+
+Time Complexity: **O(log n)**
+
+---
+
+## 3. Binary Search Template
+
+```python
+def binarySearch(nums, target):
+    left, right = 0, len(nums) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return -1
+```
+
+---
+
+## 4. Visual Intuition
+
+```
+[ 1  3  5  7  9 ]
+        ↑
+      mid
+```
+
+Each step removes half the array.
+
+---
+
+## 5. Advanced Binary Search Use
+
+Binary Search is also used to:
+
+* Search **answers**, not values
+* Find **minimum feasible** value
+* Solve optimization problems
+
+Example:
+
+* Min capacity to ship packages
+* Koko eating bananas
+* Allocate pages
+
+---
+
+## 6. When Binary Search Fails
+
+* Unsorted data
+* Non-monotonic conditions
+* Arbitrary search space
+
+---
+
+# Pattern 5 vs Pattern 6
+
+| Feature       | Prefix Sum         | Binary Search  |
+| ------------- | ------------------ | -------------- |
+| Purpose       | Fast range queries | Fast searching |
+| Data          | Arrays             | Sorted data    |
+| Time          | O(1) query         | O(log n)       |
+| Preprocessing | Required           | Not required   |
 
 
